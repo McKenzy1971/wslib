@@ -21,4 +21,8 @@
     <DocumentationFile>D:\Source\Visual Studio\wslib\wslib\wslib.xml</DocumentationFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Threading\" />
+  </ItemGroup>
+
 </Project>
