@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 namespace wslib.Security
 {
     /// <summary>
-    /// Has Methods for hashing password with Rfc2898DerivedBytes.
+    /// Implements Rfc2898DerivedBytes for hashing a password.
     /// </summary>
     public static class PBKDF2Service
     {

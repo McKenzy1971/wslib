@@ -52,9 +52,6 @@ namespace wslib.Security
         /// Returns the hash code for this instance.
         /// </summary>
         /// <returns>A hash code for the current wslib.Security.PasswordHash.</returns>
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(Hash, Iterations, Salt);
-        }
+        public override int GetHashCode() => HashCode.Combine(this.Hash, this.Iterations, this.Salt);
     }
 }

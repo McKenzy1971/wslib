@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>wslib</name>
+    </assembly>
+    <members>
+        <member name="T:wslib.Security.PasswordHash">
+            <summary>
+            Represents a hashed password with salt and iterations.
+            </summary>
+        </member>
+        <member name="P:wslib.Security.PasswordHash.Hash">
+            <summary>
+            The Hashed password
+            </summary>
+        </member>
+        <member name="P:wslib.Security.PasswordHash.Iterations">
+            <summary>
+            The iterations used for the hash
+            </summary>
+        </member>
+        <member name="P:wslib.Security.PasswordHash.Salt">
+            <summary>
+            The salt used for the hash
+            </summary>
+        </member>
+        <member name="M:wslib.Security.PasswordHash.op_Equality(wslib.Security.PasswordHash,wslib.Security.PasswordHash)">
+            <summary>
+            Compares two PasswordHash objects for equality.
+            </summary>
+            <param name="left">wslib.Security.PasswordHash one</param>
+            <param name="right">wslib.Security.PasswordHash two</param>
+            <returns>true if left has the same value as right; otherwise, false.</returns>
+        </member>
+        <member name="M:wslib.Security.PasswordHash.op_Inequality(wslib.Security.PasswordHash,wslib.Security.PasswordHash)">
+            <summary>
+            Compares two PasswordHash objects for equality.
+            </summary>
+            <param name="left">wslib.Security.PasswordHash one</param>
+            <param name="right">wslib.Security.PasswordHash two</param>
+            <returns>true if left hasn't the same value as right; otherwise, false.</returns>
+        </member>
+        <member name="M:wslib.Security.PasswordHash.Equals(System.Object)">
+            <summary>
+            Returns a value indicating whether this instance is equal to a specified wslib.Security.PasswordHash object.
+            </summary>
+            <param name="obj">A wslib.Security.PasswordHash value to compare to this instance.</param>
+            <returns>true if obj has the same value as this instance; otherwise, false.</returns>
+        </member>
+        <member name="M:wslib.Security.PasswordHash.GetHashCode">
+            <summary>
+            Returns the hash code for this instance.
+            </summary>
+            <returns>A hash code for the current wslib.Security.PasswordHash.</returns>
+        </member>
+        <member name="T:wslib.Security.PBKDF2Service">
+            <summary>
+            Implements Rfc2898DerivedBytes for hashing a password.
+            </summary>
+        </member>
+        <member name="M:wslib.Security.PBKDF2Service.HashPassword(System.Security.SecureString)">
+            <summary>
+            Generates a Hash(256bit) from an given password, an random generated Salt(256bit) and random generated iterations (Between 10K and 100K).
+            </summary>
+            <param name="password">The password to Hash</param>
+            <returns>The Hashed password with salt and iterations as struct PasswordHash</returns>
+        </member>
+        <member name="T:wslib.WPF.Core.DelegateCommand">
+            <summary>
+            Defines a command. Implementing ICommand.
+            </summary>
+        </member>
+        <member name="T:wslib.WPF.Core.DelegateCommand`1">
+            <summary>
+            Defines a command. Implementing ICommand.
+            </summary>
+        </member>
+        <member name="T:wslib.WPF.Core.ViewModelBase">
+            <summary>
+            Base class of ViewModels. Implementing INotifyPropertyChanged.
+            </summary>
+        </member>
+        <member name="E:wslib.WPF.Core.ViewModelBase.PropertyChanged">
+            <summary>
+            Event that occors when a Property value changes.
+            </summary>
+        </member>
+        <member name="M:wslib.WPF.Core.ViewModelBase.OnPropertyChanged(System.String)">
+            <summary>
+            Invokes PropertyChanged event when it isn't null.
+            </summary>
+            <param name="propertyName">Name of Callmember</param>
+        </member>
+    </members>
+</doc>

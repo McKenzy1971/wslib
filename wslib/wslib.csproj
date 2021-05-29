@@ -2,11 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <FileVersion>0.0.3.0</FileVersion>
-    <Version>0.0.0</Version>
+    <FileVersion>0.1.0.0</FileVersion>
+    <Version>0.1.0.0</Version>
     <Authors>Dennis Schröter</Authors>
     <Company>None</Company>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>StrongNameKeyFile.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -20,9 +22,5 @@
     <InheritWinAppVersionFrom>None</InheritWinAppVersionFrom>
     <DocumentationFile>D:\Source\Visual Studio\wslib\wslib\wslib.xml</DocumentationFile>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="Threading\" />
-  </ItemGroup>
 
 </Project>
