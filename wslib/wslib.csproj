@@ -7,8 +7,6 @@
     <Authors>Dennis Schröter</Authors>
     <Company>None</Company>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <SignAssembly>false</SignAssembly>
-    <AssemblyOriginatorKeyFile>StrongNameKeyFile.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -20,6 +18,10 @@
     <UpdatePackageVersion>False</UpdatePackageVersion>
     <AssemblyInfoVersionType>SettingsVersion</AssemblyInfoVersionType>
     <InheritWinAppVersionFrom>None</InheritWinAppVersionFrom>
+    <DocumentationFile>D:\Source\Visual Studio\wslib\wslib\wslib.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>D:\Source\Visual Studio\wslib\wslib\wslib.xml</DocumentationFile>
   </PropertyGroup>
 
