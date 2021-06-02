@@ -48,6 +48,12 @@ namespace wslib.Security
             return result;
         }
 
+        public static bool ValidatePassword(PasswordHash original, SecureString password)
+        {
+            PasswordHash hash = HashPassword(password, original.Iterations, original.Salt);
+            return hash == original;
+        }
+
         private static int GetRandomInt() => RandomNumberGenerator.GetInt32(10000, 100000);
         #endregion
 
