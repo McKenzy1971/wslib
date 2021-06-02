@@ -17,9 +17,6 @@ namespace wslib.WPF.Core
         /// Invokes PropertyChanged event when it isn't null.
         /// </summary>
         /// <param name="propertyName">Name of Callmember</param>
-        public virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        public virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

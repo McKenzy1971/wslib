@@ -21,7 +21,7 @@
         </member>
         <member name="P:wslib.Security.PasswordHash.Salt">
             <summary>
-            The salt used for the hash
+            The salt used for the hash.
             </summary>
         </member>
         <member name="M:wslib.Security.PasswordHash.op_Equality(wslib.Security.PasswordHash,wslib.Security.PasswordHash)">
@@ -52,6 +52,19 @@
             Returns the hash code for this instance.
             </summary>
             <returns>A hash code for the current wslib.Security.PasswordHash.</returns>
+        </member>
+        <member name="M:wslib.Security.PasswordHash.ToString">
+            <summary>
+            Gets the full Password hash as string
+            </summary>
+            <returns>Salt, iterations and Hash as string</returns>
+        </member>
+        <member name="M:wslib.Security.PasswordHash.FromString(System.String)">
+            <summary>
+            Converts a string build with PasswordHash.ToString() method to a PasswordHash.
+            </summary>
+            <param name="pwHashString">The string builded with PasswordHash.ToString() method</param>
+            <returns>An PasswordHash with salt, iterations and Hash</returns>
         </member>
         <member name="T:wslib.Security.PBKDF2Service">
             <summary>

@@ -20,8 +20,8 @@ namespace wslib.WPF.Core
 
 
         public event EventHandler CanExecuteChanged;
-        private Action _executeHandler;
-        private Predicate<bool> _canExecuteHandler;
+        private readonly Action _executeHandler;
+        private readonly Predicate<bool> _canExecuteHandler;
         #endregion
         #region Methods
 
@@ -40,14 +40,8 @@ namespace wslib.WPF.Core
     {
         public event EventHandler CanExecuteChanged;
 
-        public bool CanExecute(object parameter)
-        {
-            throw new NotImplementedException();
-        }
+        public bool CanExecute(object parameter) => throw new NotImplementedException();
 
-        public void Execute(object parameter)
-        {
-            throw new NotImplementedException();
-        }
+        public void Execute(object parameter) => throw new NotImplementedException();
     }
 }
