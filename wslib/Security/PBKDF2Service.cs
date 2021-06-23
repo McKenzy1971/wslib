@@ -1,4 +1,4 @@
-﻿using System.Security;
+﻿using System;
 using System.Security.Cryptography;
 
 namespace wslib.Security
@@ -6,56 +6,72 @@ namespace wslib.Security
     /// <summary>
     /// Implements Rfc2898DerivedBytes for hashing a password.
     /// </summary>
-    public static class PBKDF2Service
+    public class Pbkdf2Service
     {
-        #region Methods
         /// <summary>
-        /// Generates a Hash(256bit) from an given password, an random generated Salt(256bit) and random generated iterations (Between 10K and 100K).
+        /// Initializes a new Instance of Pbkdf2Service with default values. <see cref="SaltSize"/> = 8 bytes. <see cref="HashSize"/> = 128 bit. <see cref="Iterations"/> = 10000.
         /// </summary>
-        /// <param name="password">The password to Hash</param>
-        /// <returns>The Hashed password with salt and iterations as struct PasswordHash</returns>
-        public static PasswordHash HashPassword(SecureString password)
+        public Pbkdf2Service() : this(8, 128, 10000) { }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Pbkdf2Service"/> class with default values. <see cref="SaltSize"/> = 8 bytes. <see cref="Iterations"/> = 10000.
+        /// </summary>
+        /// <param name="hashsize">The size of the Hash it bit.</param>
+        public Pbkdf2Service(short hashsize) : this(8, hashsize, 10000) { }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Pbkdf2Service"/> class.
+        /// </summary>
+        /// <param name="saltSize">The size of Salt in bytes</param>
+        /// <param name="hashSize">The size of Hash in bits</param>
+        /// <param name="iterations">The Iterations count.</param>
+        public Pbkdf2Service(short saltSize, short hashSize, int iterations)
         {
-            PasswordHash result = new();
-            RNGCryptoServiceProvider rng = new();
-            result.Salt = new byte[32];
-            rng.GetBytes(result.Salt);
-            result.Iterations = GetRandomInt();
-            Rfc2898DeriveBytes deriveBytes = new Rfc2898DeriveBytes(password.ToString(), result.Salt, result.Iterations);
-            result.Hash = deriveBytes.GetBytes(32);
-            return result;
+            this.SaltSize = saltSize;
+            this.HashSize = hashSize;
+            this.Iterations = iterations;
         }
 
-        public static PasswordHash HashPassword(SecureString password, int iterations)
+        private int _iterations;
+        /// <summary>
+        /// Gets oder Sets the Salt size in bytes.
+        /// </summary>
+        public short SaltSize { get; set; }
+        /// <summary>
+        /// Gets or sets the Hash size in bits.
+        /// </summary>
+        public short HashSize { get; set; }
+        /// <summary>
+        /// Gets or sets the Iterations. Minimum is 10000.
+        /// </summary>
+        public int Iterations
         {
-            PasswordHash result = new();
-            RNGCryptoServiceProvider rng = new();
-            result.Salt = new byte[32];
-            rng.GetBytes(result.Salt);
-            result.Iterations = iterations;
-            Rfc2898DeriveBytes deriveBytes = new Rfc2898DeriveBytes(password.ToString(), result.Salt, result.Iterations);
-            result.Hash = deriveBytes.GetBytes(32);
-            return result;
+            get => this._iterations;
+            set => this._iterations = value >= 10000 ? value : 10000;
+        }
+        /// <summary>
+        /// Computes the hash for this password with random salt.
+        /// </summary>
+        /// <param name="password">The password to hash</param>
+        /// <returns>The hash, salt and iterations as <see cref="PasswordHash"/>.</returns>
+        public PasswordHash ComputeHash(string password)
+        {
+            byte[] salt = this.GetRandomSalt();
+            Rfc2898DeriveBytes deriveBytes = new(password, salt, this.Iterations);
+            return new PasswordHash(salt, deriveBytes.GetBytes(this.HashSize / 8), this.Iterations);
         }
 
-        public static PasswordHash HashPassword(SecureString password, int iterations, byte[] salt)
+        private byte[] GetRandomSalt()
         {
-            PasswordHash result = new();
-            result.Salt = salt;
-            result.Iterations = iterations;
-            Rfc2898DeriveBytes deriveBytes = new Rfc2898DeriveBytes(password.ToString(), result.Salt, result.Iterations);
-            result.Hash = deriveBytes.GetBytes(32);
-            return result;
+            try
+            {
+                RNGCryptoServiceProvider cryptoServiceProvider = new();
+                byte[] result = new byte[this.SaltSize];
+                cryptoServiceProvider.GetBytes(result);
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Getting an random salt throws an Exception.", e);
+            }
         }
-
-        public static bool ValidatePassword(PasswordHash original, SecureString password)
-        {
-            PasswordHash hash = HashPassword(password, original.Iterations, original.Salt);
-            return hash == original;
-        }
-
-        private static int GetRandomInt() => RandomNumberGenerator.GetInt32(10000, 100000);
-        #endregion
-
     }
 }

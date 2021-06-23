@@ -4,79 +4,44 @@
         <name>wslib</name>
     </assembly>
     <members>
-        <member name="T:wslib.Security.PasswordHash">
-            <summary>
-            Represents a hashed password with salt and iterations.
-            </summary>
-        </member>
-        <member name="P:wslib.Security.PasswordHash.Hash">
-            <summary>
-            The Hashed password
-            </summary>
-        </member>
-        <member name="P:wslib.Security.PasswordHash.Iterations">
-            <summary>
-            The iterations used for the hash
-            </summary>
-        </member>
-        <member name="P:wslib.Security.PasswordHash.Salt">
-            <summary>
-            The salt used for the hash.
-            </summary>
-        </member>
-        <member name="M:wslib.Security.PasswordHash.op_Equality(wslib.Security.PasswordHash,wslib.Security.PasswordHash)">
-            <summary>
-            Compares two PasswordHash objects for equality.
-            </summary>
-            <param name="left">wslib.Security.PasswordHash one</param>
-            <param name="right">wslib.Security.PasswordHash two</param>
-            <returns>true if left has the same value as right; otherwise, false.</returns>
-        </member>
-        <member name="M:wslib.Security.PasswordHash.op_Inequality(wslib.Security.PasswordHash,wslib.Security.PasswordHash)">
-            <summary>
-            Compares two PasswordHash objects for equality.
-            </summary>
-            <param name="left">wslib.Security.PasswordHash one</param>
-            <param name="right">wslib.Security.PasswordHash two</param>
-            <returns>true if left hasn't the same value as right; otherwise, false.</returns>
-        </member>
-        <member name="M:wslib.Security.PasswordHash.Equals(System.Object)">
-            <summary>
-            Returns a value indicating whether this instance is equal to a specified wslib.Security.PasswordHash object.
-            </summary>
-            <param name="obj">A wslib.Security.PasswordHash value to compare to this instance.</param>
-            <returns>true if obj has the same value as this instance; otherwise, false.</returns>
-        </member>
-        <member name="M:wslib.Security.PasswordHash.GetHashCode">
-            <summary>
-            Returns the hash code for this instance.
-            </summary>
-            <returns>A hash code for the current wslib.Security.PasswordHash.</returns>
-        </member>
-        <member name="M:wslib.Security.PasswordHash.ToString">
-            <summary>
-            Gets the full Password hash as string
-            </summary>
-            <returns>Salt, iterations and Hash as string</returns>
-        </member>
-        <member name="M:wslib.Security.PasswordHash.FromString(System.String)">
-            <summary>
-            Converts a string build with PasswordHash.ToString() method to a PasswordHash.
-            </summary>
-            <param name="pwHashString">The string builded with PasswordHash.ToString() method</param>
-            <returns>An PasswordHash with salt, iterations and Hash</returns>
-        </member>
-        <member name="T:wslib.Security.PBKDF2Service">
+        <member name="T:wslib.Security.Pbkdf2Service">
             <summary>
             Implements Rfc2898DerivedBytes for hashing a password.
             </summary>
         </member>
-        <member name="M:wslib.Security.PBKDF2Service.HashPassword(System.Security.SecureString)">
+        <member name="M:wslib.Security.Pbkdf2Service.#ctor">
             <summary>
-            Generates a Hash(256bit) from an given password, an random generated Salt(256bit) and random generated iterations (Between 10K and 100K).
+            Initializes a new Instance of Pbkdf2Service with default values. Saltsize = 8 bytes. Hashsize = 128 bit. Iterations = 10000.
             </summary>
-            <param name="password">The password to Hash</param>
-            <returns>The Hashed password with salt and iterations as struct PasswordHash</returns>
+        </member>
+        <member name="M:wslib.Security.Pbkdf2Service.#ctor(System.Int16)">
+            <summary>
+            Initializes a new Instance of Pbkdf2Service with default values. Saltsize = 8 bytes. Iterations = 10000.
+            </summary>
+            <param name="hashsize">The size of the Hash it bit.</param>
+        </member>
+        <member name="M:wslib.Security.Pbkdf2Service.#ctor(System.Int16,System.Int16,System.Int32)">
+            <summary>
+            Initializes a new Instance of Pbkdf2Service.
+            </summary>
+            <param name="saltSize">The size of Salt in bytes</param>
+            <param name="hashSize">The size of Hash in bits</param>
+            <param name="iterations">The Iterations count.</param>
+        </member>
+        <member name="P:wslib.Security.Pbkdf2Service.SaltSize">
+            <summary>
+            Gets oder Sets the Salt size in bytes.
+            </summary>
+        </member>
+        <member name="P:wslib.Security.Pbkdf2Service.HashSize">
+            <summary>
+            Gets or sets the Hash size in bits.
+            </summary>
+        </member>
+        <member name="P:wslib.Security.Pbkdf2Service.Iterations">
+            <summary>
+            Gets or sets the Iterations. Minimum is 10000.
+            </summary>
         </member>
         <member name="T:wslib.WPF.Core.DelegateCommand">
             <summary>
