@@ -10,7 +10,7 @@ namespace wslib.Security
     {
         #region Constructors
         /// <summary>
-        /// Initializes a new Instance of Pbkdf2Service with default values. <see cref="SaltSize"/> = 8 bytes. <see cref="HashSize"/> = 128 bit. <see cref="Iterations"/> = 10000.
+        /// Initializes a new Instance of <see cref="Pbkdf2Service"/> with default values. <see cref="SaltSize"/> = 8 bytes. <see cref="HashSize"/> = 128 bit. <see cref="Iterations"/> = 10000.
         /// </summary>
         public Pbkdf2Service() : this(128, 8, 10000) { }
         /// <summary>
