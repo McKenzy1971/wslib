@@ -4,6 +4,55 @@
         <name>wslib</name>
     </assembly>
     <members>
+        <member name="T:wslib.Security.PasswordHash">
+            <summary>
+            Represents an Hashed password.
+            </summary>
+        </member>
+        <member name="M:wslib.Security.PasswordHash.#ctor(System.Byte[],System.Byte[],System.Int32)">
+            <summary>
+            Initializes a new <see cref="T:wslib.Security.PasswordHash"/>.
+            </summary>
+            <param name="salt">The used salt for the hash.</param>
+            <param name="hash">The hash.</param>
+            <param name="iterations">The iterations count.</param>
+        </member>
+        <member name="P:wslib.Security.PasswordHash.Hash">
+            <summary>
+            Gets the hash.
+            </summary>
+        </member>
+        <member name="P:wslib.Security.PasswordHash.Salt">
+            <summary>
+            Gets the salt.
+            </summary>
+        </member>
+        <member name="P:wslib.Security.PasswordHash.Iterations">
+            <summary>
+            Gets the iterations.
+            </summary>
+        </member>
+        <member name="P:wslib.Security.PasswordHash.HashSize">
+            <summary>
+            The size of the hash in bits.
+            </summary>
+        </member>
+        <member name="M:wslib.Security.PasswordHash.op_Equality(wslib.Security.PasswordHash,wslib.Security.PasswordHash)">
+            <summary>
+            Evaluates if two <see cref="T:wslib.Security.PasswordHash"/> objects have the same value.
+            </summary>
+            <param name="left">Left object to compare</param>
+            <param name="right">Right object to compare</param>
+            <returns>True if the objects have the same value, otherwise false.</returns>
+        </member>
+        <member name="M:wslib.Security.PasswordHash.op_Inequality(wslib.Security.PasswordHash,wslib.Security.PasswordHash)">
+            <summary>
+            Evaluates if two <see cref="T:wslib.Security.PasswordHash"/> objects haven't the same value.
+            </summary>
+            <param name="left">Left object to compare</param>
+            <param name="right">Right object to compare</param>
+            <returns>True if the objects haven't the same value. Otherwise false.</returns>
+        </member>
         <member name="T:wslib.Security.Pbkdf2Service">
             <summary>
             Implements Rfc2898DerivedBytes for hashing a password.
@@ -11,21 +60,21 @@
         </member>
         <member name="M:wslib.Security.Pbkdf2Service.#ctor">
             <summary>
-            Initializes a new Instance of Pbkdf2Service with default values. Saltsize = 8 bytes. Hashsize = 128 bit. Iterations = 10000.
+            Initializes a new Instance of Pbkdf2Service with default values. <see cref="P:wslib.Security.Pbkdf2Service.SaltSize"/> = 8 bytes. <see cref="P:wslib.Security.Pbkdf2Service.HashSize"/> = 128 bit. <see cref="P:wslib.Security.Pbkdf2Service.Iterations"/> = 10000.
             </summary>
         </member>
         <member name="M:wslib.Security.Pbkdf2Service.#ctor(System.Int16)">
             <summary>
-            Initializes a new Instance of Pbkdf2Service with default values. Saltsize = 8 bytes. Iterations = 10000.
+            Initializes a new instance of the <see cref="T:wslib.Security.Pbkdf2Service"/> class with default values. <see cref="P:wslib.Security.Pbkdf2Service.SaltSize"/> = 8 bytes. <see cref="P:wslib.Security.Pbkdf2Service.Iterations"/> = 10000.
             </summary>
-            <param name="hashsize">The size of the Hash it bit.</param>
+            <param name="hashSize">The size of the Hash it bit.</param>
         </member>
         <member name="M:wslib.Security.Pbkdf2Service.#ctor(System.Int16,System.Int16,System.Int32)">
             <summary>
-            Initializes a new Instance of Pbkdf2Service.
+            Initializes a new instance of the <see cref="T:wslib.Security.Pbkdf2Service"/> class.
             </summary>
-            <param name="saltSize">The size of Salt in bytes</param>
             <param name="hashSize">The size of Hash in bits</param>
+            <param name="saltSize">The size of Salt in bytes</param>
             <param name="iterations">The Iterations count.</param>
         </member>
         <member name="P:wslib.Security.Pbkdf2Service.SaltSize">
@@ -42,6 +91,29 @@
             <summary>
             Gets or sets the Iterations. Minimum is 10000.
             </summary>
+        </member>
+        <member name="M:wslib.Security.Pbkdf2Service.ComputeHash(System.String)">
+            <summary>
+            Computes the hash for this password with random salt.
+            </summary>
+            <param name="password">The password to hash</param>
+            <returns>The hash, salt and iterations as <see cref="T:wslib.Security.PasswordHash"/>.</returns>
+        </member>
+        <member name="M:wslib.Security.Pbkdf2Service.ComputeHash(System.String,System.Byte[])">
+            <summary>
+            Computes the hash for this password with given salt.
+            </summary>
+            <param name="password">The password to hash</param>
+            <param name="salt">The hash for computing the hash</param>
+            <returns>The hash, salt and iterations as <see cref="T:wslib.Security.PasswordHash"/>.</returns>
+        </member>
+        <member name="M:wslib.Security.Pbkdf2Service.VerifyPassword(wslib.Security.PasswordHash,System.String)">
+            <summary>
+            Verifys a password using previously hashed <see cref="T:wslib.Security.PasswordHash"/> generated by <see cref="M:wslib.Security.Pbkdf2Service.ComputeHash(System.String)"/>.
+            </summary>
+            <param name="passwordHash">The original hash.</param>
+            <param name="password">The password to verify.</param>
+            <returns>True if the output of hashing <paramref name="password"/> is the same as <paramref name="passwordHash"/>.</returns>
         </member>
         <member name="T:wslib.WPF.Core.DelegateCommand">
             <summary>

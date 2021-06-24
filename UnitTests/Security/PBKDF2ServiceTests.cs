@@ -29,7 +29,7 @@ namespace UnitTests.Security
         [Category("ConstructorTests")]
         public void Initialization_CustomConstructor_NoExceptions()
         {
-            Pbkdf2Service pbkdf2Service = new(_saltsize, _hashsize, _iterations);
+            Pbkdf2Service pbkdf2Service = new(_hashsize, _saltsize, _iterations);
 
             Assert.IsNotNull(pbkdf2Service);
             Assert.AreEqual(_saltsize, pbkdf2Service.SaltSize);
@@ -42,7 +42,7 @@ namespace UnitTests.Security
         [Category("ConstructorTests")]
         public void Initialization_CustomConstructor_ChangedIterationsToMinimum()
         {
-            Pbkdf2Service pbkdf2Service = new(_saltsize, _hashsize, 20);
+            Pbkdf2Service pbkdf2Service = new(_hashsize, _saltsize, 20);
 
             Assert.IsNotNull(pbkdf2Service);
             Assert.AreEqual(_saltsize, pbkdf2Service.SaltSize);
@@ -51,16 +51,61 @@ namespace UnitTests.Security
         }
 
         [Test]
-        [Category("HashTest")]
-        public void HashPassword_DefaultConstructor_HashedPasswordAndSaltAsByteArray()
+        [Category("HashTests")]
+        public void HashPassword_DefaultConstructor_PasswordHash()
         {
             Pbkdf2Service pbkdf2Service = new();
             PasswordHash passwordHash = pbkdf2Service.ComputeHash(_password);
+            PasswordHash passwordHash2 = pbkdf2Service.ComputeHash(_password);
 
             Assert.IsNotNull(passwordHash);
             Assert.IsNotEmpty(passwordHash.Salt);
             Assert.IsNotEmpty(passwordHash.Hash);
             Assert.NotZero(passwordHash.Iterations);
+            Assert.AreNotEqual(passwordHash.Salt, passwordHash2.Salt);
+            Assert.AreNotEqual(passwordHash.Hash, passwordHash2.Hash);
+            Assert.AreEqual(passwordHash.Iterations, passwordHash2.Iterations);
+        }
+
+        [Test]
+        [Category("HashTests")]
+        public void HashPassword_CustomConstructorSaltGiven_EqualPasswordHashs()
+        {
+            Pbkdf2Service pbkdf2Service = new(32, 128, 12000);
+            PasswordHash passwordHash = pbkdf2Service.ComputeHash(_password);
+            PasswordHash passwordHash2 = pbkdf2Service.ComputeHash(_password, passwordHash.Salt);
+
+            Assert.IsNotNull(passwordHash);
+            Assert.IsNotEmpty(passwordHash.Salt);
+            Assert.IsNotEmpty(passwordHash.Hash);
+            Assert.NotZero(passwordHash.Iterations);
+            Assert.AreEqual(passwordHash.Salt, passwordHash2.Salt);
+            Assert.AreEqual(passwordHash.Hash, passwordHash2.Hash);
+            Assert.AreEqual(passwordHash.Iterations, passwordHash2.Iterations);
+        }
+
+        [Test]
+        [Category("VerifyHashTests")]
+        public void Verify_DefaultValues_True()
+        {
+            Pbkdf2Service pbkdf2Service = new();
+            PasswordHash passwordHash = pbkdf2Service.ComputeHash(_password);
+
+            bool result = Pbkdf2Service.VerifyPassword(passwordHash, _password);
+
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        [Category("VerifyHashTests")]
+        public void Verify_DifferentPassword_False()
+        {
+            Pbkdf2Service pbkdf2Service = new();
+            PasswordHash passwordHash = pbkdf2Service.ComputeHash("pass");
+
+            bool result = Pbkdf2Service.VerifyPassword(passwordHash, _password);
+
+            Assert.IsFalse(result);
         }
     }
 }
