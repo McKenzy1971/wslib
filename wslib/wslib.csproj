@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <FileVersion>0.1.34.0</FileVersion>
-    <Version>0.1.0.0</Version>
+    <FileVersion>0.1.36.1</FileVersion>
+    <Version>1.0.11</Version>
     <Authors>Dennis Schröter</Authors>
     <Company>None</Company>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>

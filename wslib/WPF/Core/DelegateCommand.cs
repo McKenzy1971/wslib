@@ -21,6 +21,16 @@ namespace wslib.WPF.Core
                 throw new ArgumentNullException(nameof(executeHandler), "ExecuteHandler can't be null. Please specify the Command");
         }
 
+        public DelegateCommand(Action executeHandler)
+        {
+            this._executeHandler = executeHandler;
+            this._canExecuteHandler = (b) => true;
+            if (this._executeHandler is null)
+            {
+                throw new ArgumentNullException(nameof(executeHandler), "ExecuteHandler can't be null. Please specify the command");
+            }
+        }
+
         #region Handlers
         /// <summary>
         /// Represents the event that occurs, when <see cref="OnCanExecuteChanged"/> is called.
